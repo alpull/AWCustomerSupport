@@ -10,6 +10,10 @@ namespace AWCustomerSupport.Data {
 
         public DbSet<Ticket> Ticket { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            modelBuilder.Entity<Ticket>().ToTable("Ticket");
+        }
+
     }
 
 }
