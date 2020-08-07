@@ -9,9 +9,9 @@ namespace AWCustomerSupport.Pages.Tickets {
 
     public class DetailsModel : PageModel {
 
-        private readonly TicketContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DetailsModel(TicketContext context) {
+        public DetailsModel(ApplicationDbContext context) {
             _context = context;
         }
 

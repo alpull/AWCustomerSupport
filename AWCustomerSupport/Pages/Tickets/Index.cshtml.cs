@@ -9,9 +9,9 @@ namespace AWCustomerSupport.Pages.Tickets {
 
     public class IndexModel : PageModel {
 
-        private readonly TicketContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public IndexModel(TicketContext context) {
+        public IndexModel(ApplicationDbContext context) {
             _context = context;
         }
 

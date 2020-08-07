@@ -9,9 +9,9 @@ namespace AWCustomerSupport.Pages.Tickets {
 
     public class DeleteModel : PageModel {
 
-        private readonly TicketContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DeleteModel(TicketContext context) {
+        public DeleteModel(ApplicationDbContext context) {
             _context = context;
         }
 

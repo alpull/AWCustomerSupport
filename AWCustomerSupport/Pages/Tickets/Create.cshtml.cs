@@ -8,9 +8,9 @@ namespace AWCustomerSupport.Pages.Tickets {
 
     public class CreateModel : PageModel {
 
-        private readonly TicketContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public CreateModel(TicketContext context) {
+        public CreateModel(ApplicationDbContext context) {
             _context = context;
         }
 

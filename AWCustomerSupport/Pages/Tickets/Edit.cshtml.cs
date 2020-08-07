@@ -10,9 +10,9 @@ namespace AWCustomerSupport.Pages.Tickets {
 
     public class EditModel : PageModel {
 
-        private readonly TicketContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public EditModel(TicketContext context) {
+        public EditModel(ApplicationDbContext context) {
             _context = context;
         }
 
