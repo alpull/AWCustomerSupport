@@ -2,10 +2,10 @@
 @model AWCustomerSupport.Pages.Tickets.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Tickets";
 }
 
-<h1>Index</h1>
+<h1>Tickets</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -14,19 +14,24 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Tickets[0].Name)
+            <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort">
+                @Html.DisplayNameFor(model => model.Tickets[0].Name)
+            </a>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Tickets[0].Description)
+            <a asp-page="./Index" asp-route-sortOrder="@Model.DescriptionSort">
+                @Html.DisplayNameFor(model => model.Tickets[0].Description)
+            </a>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Tickets[0].EntryDate)
+            <a asp-page="./Index" asp-route-sortOrder="@Model.EntrySort">
+                @Html.DisplayNameFor(model => model.Tickets[0].EntryDate)
+            </a>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Tickets[0].Deadline)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tickets[0].Status)
+            <a asp-page="./Index" asp-route-sortOrder="@Model.DeadlineSort">
+                @Html.DisplayNameFor(model => model.Tickets[0].Deadline)
+            </a>
         </th>
         <th></th>
     </tr>
@@ -45,9 +50,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Deadline)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

@@ -1,6 +1,6 @@
 using System;
+using System.Linq;
 using AWCustomerSupport.Data.Models;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace AWCustomerSupport.Data {
 
@@ -9,6 +9,7 @@ namespace AWCustomerSupport.Data {
         public static void Initialize(AppDbContext context) {
             context.Database.EnsureCreated();
 
+            // TODO: Ensure Tickets table is created even when database exists
             if (context.Tickets.Any()) return;
 
             var tickets = new[] {
@@ -17,21 +18,18 @@ namespace AWCustomerSupport.Data {
                     Description = "Help pls, my cat broke down!!1!",
                     EntryDate = DateTime.Now,
                     Deadline = DateTime.Today.AddDays(1),
-                    Status = Status.Active
                 },
                 new Ticket {
                     Name = "Moderate issue",
                     Description = "My dog isn't working properly",
                     EntryDate = DateTime.Now,
                     Deadline = DateTime.Today.AddDays(2),
-                    Status = Status.Active
                 },
                 new Ticket {
                     Name = "Take your time",
                     Description = "Lost my stress ball :( I have another, tho",
                     EntryDate = DateTime.Now,
                     Deadline = DateTime.MaxValue,
-                    Status = Status.Active
                 }
             };
 
