@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace AWCustomerSupport.Data.Models {
 
@@ -7,8 +8,13 @@ namespace AWCustomerSupport.Data.Models {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public DateTime EntryDate { get; set; }
+
+        [Display(Name = "Entry")]
+        public DateTime EntryDate { get; set; } = DateTime.Now;
+
         public DateTime Deadline { get; set; }
+
+        public TimeSpan TimeToDeadline => Deadline - DateTime.Now;
 
     }
 
