@@ -10,9 +10,9 @@ namespace AWCustomerSupport.Pages.Tickets {
 
     public class EditModel : PageModel {
 
-        private readonly ApplicationDbContext _context;
+        private readonly AppDbContext _context;
 
-        public EditModel(ApplicationDbContext context) {
+        public EditModel(AppDbContext context) {
             _context = context;
         }
 
@@ -22,7 +22,7 @@ namespace AWCustomerSupport.Pages.Tickets {
         public async Task<IActionResult> OnGetAsync(int? id) {
             if (id == null) return NotFound();
 
-            Ticket = await _context.Ticket.FirstOrDefaultAsync(m => m.ID == id);
+            Ticket = await _context.Tickets.FirstOrDefaultAsync(m => m.Id == id);
 
             if (Ticket == null) return NotFound();
             return Page();
@@ -38,7 +38,7 @@ namespace AWCustomerSupport.Pages.Tickets {
             try {
                 await _context.SaveChangesAsync();
             } catch (DbUpdateConcurrencyException) {
-                if (!TicketExists(Ticket.ID))
+                if (!TicketExists(Ticket.Id))
                     return NotFound();
                 throw;
             }
@@ -47,7 +47,7 @@ namespace AWCustomerSupport.Pages.Tickets {
         }
 
         private bool TicketExists(int id) {
-            return _context.Ticket.Any(e => e.ID == id);
+            return _context.Tickets.Any(e => e.Id == id);
         }
 
     }

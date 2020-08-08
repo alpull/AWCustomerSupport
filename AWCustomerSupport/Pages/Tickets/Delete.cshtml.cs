@@ -9,9 +9,9 @@ namespace AWCustomerSupport.Pages.Tickets {
 
     public class DeleteModel : PageModel {
 
-        private readonly ApplicationDbContext _context;
+        private readonly AppDbContext _context;
 
-        public DeleteModel(ApplicationDbContext context) {
+        public DeleteModel(AppDbContext context) {
             _context = context;
         }
 
@@ -21,7 +21,7 @@ namespace AWCustomerSupport.Pages.Tickets {
         public async Task<IActionResult> OnGetAsync(int? id) {
             if (id == null) return NotFound();
 
-            Ticket = await _context.Ticket.FirstOrDefaultAsync(m => m.ID == id);
+            Ticket = await _context.Tickets.FirstOrDefaultAsync(m => m.Id == id);
 
             if (Ticket == null) return NotFound();
             return Page();
@@ -30,10 +30,10 @@ namespace AWCustomerSupport.Pages.Tickets {
         public async Task<IActionResult> OnPostAsync(int? id) {
             if (id == null) return NotFound();
 
-            Ticket = await _context.Ticket.FindAsync(id);
+            Ticket = await _context.Tickets.FindAsync(id);
 
             if (Ticket != null) {
-                _context.Ticket.Remove(Ticket);
+                _context.Tickets.Remove(Ticket);
                 await _context.SaveChangesAsync();
             }
 

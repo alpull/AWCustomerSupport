@@ -9,9 +9,9 @@ namespace AWCustomerSupport.Pages.Tickets {
 
     public class DetailsModel : PageModel {
 
-        private readonly ApplicationDbContext _context;
+        private readonly AppDbContext _context;
 
-        public DetailsModel(ApplicationDbContext context) {
+        public DetailsModel(AppDbContext context) {
             _context = context;
         }
 
@@ -20,7 +20,7 @@ namespace AWCustomerSupport.Pages.Tickets {
         public async Task<IActionResult> OnGetAsync(int? id) {
             if (id == null) return NotFound();
 
-            Ticket = await _context.Ticket.FirstOrDefaultAsync(m => m.ID == id);
+            Ticket = await _context.Tickets.FirstOrDefaultAsync(m => m.Id == id);
 
             if (Ticket == null) return NotFound();
             return Page();

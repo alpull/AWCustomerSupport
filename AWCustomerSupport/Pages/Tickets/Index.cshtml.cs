@@ -9,16 +9,16 @@ namespace AWCustomerSupport.Pages.Tickets {
 
     public class IndexModel : PageModel {
 
-        private readonly ApplicationDbContext _context;
+        private readonly AppDbContext _context;
 
-        public IndexModel(ApplicationDbContext context) {
+        public IndexModel(AppDbContext context) {
             _context = context;
         }
 
-        public IList<Ticket> Ticket { get; set; }
+        public IList<Ticket> Tickets { get; set; }
 
         public async Task OnGetAsync() {
-            Ticket = await _context.Ticket.ToListAsync();
+            Tickets = await _context.Tickets.ToListAsync();
         }
 
     }

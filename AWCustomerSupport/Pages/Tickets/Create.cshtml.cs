@@ -8,9 +8,9 @@ namespace AWCustomerSupport.Pages.Tickets {
 
     public class CreateModel : PageModel {
 
-        private readonly ApplicationDbContext _context;
+        private readonly AppDbContext _context;
 
-        public CreateModel(ApplicationDbContext context) {
+        public CreateModel(AppDbContext context) {
             _context = context;
         }
 
@@ -26,7 +26,7 @@ namespace AWCustomerSupport.Pages.Tickets {
         public async Task<IActionResult> OnPostAsync() {
             if (!ModelState.IsValid) return Page();
 
-            _context.Ticket.Add(Ticket);
+            _context.Tickets.Add(Ticket);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

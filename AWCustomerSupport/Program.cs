@@ -26,8 +26,8 @@ namespace AWCustomerSupport {
                 var services = scope.ServiceProvider;
 
                 try {
-                    var context = services.GetRequiredService<ApplicationDbContext>();
-                    context.Database.EnsureCreated();
+                    var context = services.GetRequiredService<AppDbContext>();
+                    DbInitializer.Initialize(context);
                 } catch (Exception e) {
                     var logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(e, "Error creating the database.");
