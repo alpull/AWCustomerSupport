@@ -41,7 +41,7 @@
         string backgroundColor, textColor;
 
         if (item.TimeToDeadline < TimeSpan.FromHours(1)) {
-            backgroundColor = "background-color: red";
+            backgroundColor = "background-color: crimson";
             textColor = "color: white";
         } else {
             backgroundColor = "";
@@ -62,9 +62,9 @@
                 @Html.DisplayFor(modelItem => item.Deadline)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                <a style="@textColor; font-weight: bold" asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a style="@textColor; font-weight: bold" asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a style="@textColor; font-weight: bold" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
     }
