@@ -22,28 +22,27 @@ namespace AWCustomerSupport.Pages.Tickets {
         public async Task<IActionResult> OnGetAsync(int? id) {
             if (id == null) return NotFound();
 
-            Ticket = await _context.Tickets.FirstOrDefaultAsync(m => m.Id == id);
+            Ticket = await _context.Tickets.FindAsync(id);
 
             if (Ticket == null) return NotFound();
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync() {
-            if (!ModelState.IsValid) return Page();
+        public async Task<IActionResult> OnPostAsync(int id) {
+            var ticketToUpdate = await _context.Tickets.FindAsync(id);
 
-            _context.Attach(Ticket).State = EntityState.Modified;
+            if (ticketToUpdate == null) return NotFound();
 
-            try {
+            if (await TryUpdateModelAsync<Ticket>(ticketToUpdate, "ticket",
+                t => t.Name,
+                t => t.Description,
+                t => t.Deadline)) {
                 await _context.SaveChangesAsync();
-            } catch (DbUpdateConcurrencyException) {
-                if (!TicketExists(Ticket.Id))
-                    return NotFound();
-                throw;
+                return RedirectToPage("./Index");
             }
 
-            return RedirectToPage("./Index");
+            return Page();
         }
 
         private bool TicketExists(int id) {

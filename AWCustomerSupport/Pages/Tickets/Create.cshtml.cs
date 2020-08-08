@@ -21,15 +21,20 @@ namespace AWCustomerSupport.Pages.Tickets {
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync() {
-            if (!ModelState.IsValid) return Page();
+            var emptyTicket = new Ticket();
 
-            _context.Tickets.Add(Ticket);
-            await _context.SaveChangesAsync();
+            if (await TryUpdateModelAsync<Ticket>(emptyTicket, "ticket",
+                t => t.Name,
+                t => t.Description,
+                t => t.Deadline)) {
+                _context.Tickets.Add(emptyTicket);
+                await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+                return RedirectToPage("./Index");
+            }
+
+            return Page();
         }
 
     }
