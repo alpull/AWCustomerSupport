@@ -31,8 +31,6 @@ namespace AWCustomerSupport.Pages.Tickets {
         public string DescriptionSort { get; set; }
         public string EntrySort { get; set; }
         public string DeadlineSort { get; set; }
-        public string CurrentFilter { get; set; }
-        public string CurrentSort { get; set; }
 
         public IList<Ticket> Tickets { get; set; }
 
