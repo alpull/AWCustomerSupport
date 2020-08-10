@@ -5,6 +5,55 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-3">Hello!</h1>
+    <p>This is a customer support web application for AgileWorks</p>
+</div>
+
+<div class="row align-self-md-auto">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <p>
+                    Using this application, you are able to see a list of customer complaints in form of tickets.
+                </p>
+                <p>
+                    By default, tickets are sorted by their upcoming deadlines.<br/>
+                    Tickets, which have the least amount of time to a deadline or have already passed it, are shown at the top.
+                </p>
+                <p class="card-text">
+                    <a class="btn btn-primary" asp-page="/Tickets/Index">See list of tickets</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <p>
+                    You are also able to add a new ticket to the list with the following attributes:<br/>
+                    * Name<br/>
+                    * Description<br/>
+                    * Deadline<br/>
+                </p>
+                <p>
+                    The entry date and time are automatically added upon adding a ticket.
+                </p>
+                <p class="card-text">
+                    <a class="btn btn-primary" asp-page="/Tickets/Create">Add new ticket</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row align-self-md-auto">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text">
+                    The project is available to review and download at
+                    <a href="https://github.com/alpull/AWCustomerSupport">GitHub</a>.
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
