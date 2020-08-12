@@ -86,10 +86,6 @@ namespace AWCustomerSupport.Pages.Tickets {
             return null;
         }
 
-        public static bool IsDeadlineValid(Ticket ticket) {
-            return ticket.Deadline > ticket.EntryDate;
-        }
-
     }
 
 }
