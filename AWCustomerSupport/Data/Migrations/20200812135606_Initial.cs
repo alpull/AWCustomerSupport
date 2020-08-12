@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AWCustomerSupport.Data.Migrations
 {
-    public partial class Ticket : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,8 +52,8 @@ namespace AWCustomerSupport.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: false),
                     EntryDate = table.Column<DateTime>(nullable: false),
                     Deadline = table.Column<DateTime>(nullable: false)
                 },
