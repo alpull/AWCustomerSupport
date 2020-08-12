@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 using System.Linq;
 using AWCustomerSupport.Data.Models;
 
@@ -8,10 +7,11 @@ namespace AWCustomerSupport.Data {
     public static class DbInitializer {
 
         public static void Initialize(AppDbContext context) {
-            string dateFormat = "dd/MM/yyyy HH:mm";
 
             // TODO: Ensure Tickets table is created even when database exists
             if (context.Tickets.Any()) return;
+
+            const string dateFormat = Ticket.DATE_FORMAT;
 
             var tickets = new[] {
                 new Ticket {
