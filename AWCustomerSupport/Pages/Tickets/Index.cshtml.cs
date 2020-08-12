@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AWCustomerSupport.Data;
@@ -20,6 +21,9 @@ namespace AWCustomerSupport.Pages.Tickets {
         private const string ENTRY_DESC = "entry_desc";
 
         private const string DL_DESC = "dl_desc";
+
+        private const string BACKGROUND_COLOR = "background-color: crimson";
+        private const string TEXT_COLOR = "color: white";
 
         private readonly AppDbContext _context;
 
@@ -70,6 +74,20 @@ namespace AWCustomerSupport.Pages.Tickets {
             }
 
             Tickets = await ticketsIQ.AsNoTracking().ToListAsync();
+        }
+
+        public static string GetBackgroundColor(Ticket ticket) {
+            if (ticket.TimeToDeadline < TimeSpan.FromHours(1))  return BACKGROUND_COLOR;
+            return null;
+        }
+
+        public static string GetTextColor(Ticket ticket) {
+            if (ticket.TimeToDeadline < TimeSpan.FromHours(1)) return TEXT_COLOR;
+            return null;
+        }
+
+        public static bool IsDeadlineValid(Ticket ticket) {
+            return ticket.Deadline > ticket.EntryDate;
         }
 
     }

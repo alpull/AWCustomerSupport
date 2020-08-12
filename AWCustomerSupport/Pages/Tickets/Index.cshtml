@@ -38,12 +38,8 @@
     </thead>
     <tbody>
     @foreach (var item in Model.Tickets) {
-        string backgroundColor = "", textColor = "";
-
-        if (item.TimeToDeadline < TimeSpan.FromHours(1)) {
-            backgroundColor = "background-color: crimson";
-            textColor = "color: white";
-        }
+        string backgroundColor = IndexModel.GetBackgroundColor(item);
+        string textColor = IndexModel.GetTextColor(item);
 
         <tr style="@backgroundColor; @textColor">
             <td>
