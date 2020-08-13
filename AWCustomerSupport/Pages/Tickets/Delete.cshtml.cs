@@ -17,6 +17,7 @@ namespace AWCustomerSupport.Pages.Tickets {
 
         [BindProperty]
         public Ticket Ticket { get; set; }
+
         public string ErrorMsg { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id, bool? saveChangesError = false) {
@@ -36,18 +37,16 @@ namespace AWCustomerSupport.Pages.Tickets {
 
             var ticket = await _context.Tickets.FindAsync(id);
 
-            if (ticket == null) {
-                return NotFound();}
+            if (ticket == null) return NotFound();
 
             try {
-                _context.Tickets.Remove(Ticket);
+                _context.Tickets.Remove(ticket);
                 await _context.SaveChangesAsync();
 
                 return RedirectToPage("./Index");
             } catch (DbUpdateException) {
                 return RedirectToAction("./Delete", new {id, saveChangesError = true});
             }
-
         }
 
     }
