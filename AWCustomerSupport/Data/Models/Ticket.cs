@@ -7,7 +7,7 @@ namespace AWCustomerSupport.Data.Models {
 
         public const string DATE_FORMAT = "dd/MM/yyyy HH:mm";
 
-        public int Id { get; set; }
+        public int Id { get; private set; }
 
         [Required]
         public string Name { get; set; }
@@ -16,20 +16,21 @@ namespace AWCustomerSupport.Data.Models {
         public string Description { get; set; }
 
         [Display(Name = "Entry")]
-        public DateTime EntryDate { get; set; } = DateTime.Now;
+        public DateTime EntryDate { get; private set; } = DateTime.Now;
 
         [ValidateDateRange]
         public DateTime Deadline { get; set; }
 
-        public TimeSpan TimeToDeadline => Deadline - DateTime.Now;
+        public TimeSpan TimeToDeadline => Deadline - EntryDate;
 
     }
 
     public class ValidateDateRange : ValidationAttribute {
 
         protected override ValidationResult IsValid(object value, ValidationContext context) {
-            return Convert.ToDateTime(value) >= DateTime.Now ?
-                ValidationResult.Success : new ValidationResult("Deadline must be in the future!");
+            return Convert.ToDateTime(value) >= DateTime.Now
+                ? ValidationResult.Success
+                : new ValidationResult("Deadline must be in the future.");
         }
 
     }
