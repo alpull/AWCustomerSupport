@@ -1,32 +1,42 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using AWCustomerSupport.Data;
 using AWCustomerSupport.Data.Models;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Xunit;
 
 namespace Tests.ForDatabase {
 
     public class TicketDbTests : DatabaseTestBase {
 
+        private readonly DbConnection _connection;
+
         public TicketDbTests() : base(new DbContextOptionsBuilder<AppDbContext>()
-            .UseInMemoryDatabase("TEST").Options) { }
+            .UseSqlite(CreateInMemoryDatabase()).Options) {
+            _connection = RelationalOptionsExtension.Extract(ContextOptions).Connection;
+        }
+
+        private static DbConnection CreateInMemoryDatabase() {
+            DbConnection connection = new SqliteConnection("Filename=:memory:");
+
+            connection.Open();
+
+            return connection;
+        }
 
         [Fact]
         public void DatabaseIsSeeded() {
             using AppDbContext context = new AppDbContext(ContextOptions);
 
-            Assert.NotNull(context.Database);
-            Assert.NotEmpty(context.Tickets);
-        }
-
-        [Fact]
-        public void TicketsAreCreated() {
-            using AppDbContext context = new AppDbContext(ContextOptions);
-
             const int expectedCount = 3;
             List<Ticket> tickets = context.Tickets.ToList();
+
+            Assert.NotNull(context.Database);
+            Assert.NotEmpty(context.Tickets);
 
             Assert.Equal(expectedCount, tickets.Count);
 
@@ -49,39 +59,53 @@ namespace Tests.ForDatabase {
         }
 
         [Fact]
-        public void NewTicketIdEquals4() {
+        public void CanAddTicketToDatabase() {
             using AppDbContext context = new AppDbContext(ContextOptions);
 
             Ticket t = context.Tickets.Add(ValidTicket).Entity;
+            context.SaveChanges();
 
             Assert.NotNull(t);
 
-            Assert.Equal(4, t.Id);
             Assert.Equal(VALID_NAME, t.Name);
             Assert.Equal(VALID_DESCRIPTION, t.Description);
             Assert.Equal(ValidDeadline, t.Deadline);
+        }
+
+        [Fact]
+        public void NewTicketIdEquals4() {
+            using AppDbContext context = new AppDbContext(ContextOptions);
+
+            const int expectedId = 4;
+
+            Ticket t = context.Tickets.Add(ValidTicket).Entity;
+            context.SaveChanges();
+
+            Assert.Equal(expectedId, t.Id);
         }
 
         [Theory]
         [InlineData("Ticket 4", "Sample text")]
         [InlineData("Ticket 5", "This is also a text")]
         [InlineData("Ticket 6", "This is a description")]
-        public void CanAddTicketToDatabase(string name, string description) {
+        public void CanFindNewTicketFromDatabase(string name, string description) {
             using AppDbContext context = new AppDbContext(ContextOptions);
 
             DateTime deadline = DateTime.Now.AddHours(new Random().Next(0, 100));
+            const int expectedId = 4;
+            const int expectedCount = 4;
 
             context.Tickets
                 .Add(new Ticket {Name = name, Description = description, Deadline = deadline});
             context.SaveChanges();
 
-            Ticket ticket = context.Tickets.Find(4);
+            Ticket t = context.Tickets.Find(expectedId);
 
-            Assert.Equal(4, context.Tickets.Count());
+            Assert.Equal(expectedCount, context.Tickets.Count());
 
-            Assert.Equal(name, ticket.Name);
-            Assert.Equal(description, ticket.Description);
-            Assert.Equal(deadline, ticket.Deadline);
+            Assert.Equal(name, t.Name);
+            Assert.Equal(description, t.Description);
+            Assert.Equal(deadline, t.Deadline);
         }
 
         [Theory]
